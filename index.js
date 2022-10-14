@@ -32,5 +32,5 @@ app.listen(4444, (err) => {
     return console.log(err);
   }
 
-  console.log('server ok');
+  console.log('Application listening on port 4444');
 });
