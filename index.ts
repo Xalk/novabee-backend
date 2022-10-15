@@ -1,46 +1,27 @@
-import express from 'express';
-
-import mongoose from 'mongoose';
-
-import {loginValidation, registerValidation} from './validations/auth';
-import { apiaryCreateValidation } from './validations/apiary';
-
-import checkAuth from './utils/checkAuth';
-
-import * as UserController from './controllers/UserController';
-import * as SensorController from './controllers/SensorController';
-import * as ApiaryController from './controllers/ApiaryController';
-
 import * as dotenv from 'dotenv';
-import handleValidationErrors from "./utils/handleValidationErrors";
-
 dotenv.config();
 
-const URI = process.env.MONGODB_URI;
+import express from 'express';
+import routes from "./routes";
 
-mongoose
-  .connect(`${URI}`)
-  .then(() => console.log('DB ok'))
-  .catch((err) => console.log('DB ok', err));
 
+// Middleware
 const app = express();
-
 app.use(express.json());
 
-app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
-app.post('/auth/login',loginValidation, handleValidationErrors,UserController.login);
-app.get('/auth/me', checkAuth, UserController.getMe);
 
-app.post('/sensor', SensorController.getSensorValues);
+// Routes
+app.use('/api', routes.authRouter)
+app.use('/api', routes.sensorRouter)
+app.use('/api', routes.apiaryRouter)
 
-app.post('/apiary', checkAuth, apiaryCreateValidation, handleValidationErrors, ApiaryController.create);
-app.get('/apiary', ApiaryController.getAll);
-app.get('/apiary/:id', ApiaryController.getOne);
-app.delete('/apiary/:id', checkAuth, ApiaryController.remove);
-app.patch('/apiary/:id', checkAuth, apiaryCreateValidation, ApiaryController.update);
 
-// server listenning
+// Database
+import './config/database'
+
+
+// server listening
 const PORT = process.env.PORT || 4444
 app.listen(PORT, () => {
-  console.log('Server is running on port', PORT)
+    console.log('Server is running on port', PORT)
 })
