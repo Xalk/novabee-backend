@@ -3,7 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 import { registerValidation } from './validations/auth.js';
-import { createValidation } from './validations/apiary.js';
+import { apiaryCreateValidation } from './validations/apiary.js';
 
 import checkAuth from './utils/checkAuth.js';
 
@@ -30,12 +30,11 @@ app.get('/auth/me', checkAuth, UserController.getMe);
 
 app.post('/sensor', SensorController.getSensorValues);
 
-app.post('/apiary', checkAuth, createValidation, ApiaryController.create);
+app.post('/apiary', checkAuth, apiaryCreateValidation, ApiaryController.create);
 app.get('/apiary', ApiaryController.getAll);
 app.get('/apiary/:id', ApiaryController.getOne);
-
 app.delete('/apiary/:id', checkAuth, ApiaryController.remove);
-app.patch('/apiary/:id', checkAuth, createValidation, ApiaryController.update);
+app.patch('/apiary/:id', checkAuth, apiaryCreateValidation, ApiaryController.update);
 
 app.listen(4444, (err) => {
   if (err) {
