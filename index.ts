@@ -2,7 +2,7 @@ import express from 'express';
 
 import mongoose from 'mongoose';
 
-import { registerValidation } from './validations/auth';
+import {loginValidation, registerValidation} from './validations/auth';
 import { apiaryCreateValidation } from './validations/apiary';
 
 import checkAuth from './utils/checkAuth';
@@ -12,6 +12,7 @@ import * as SensorController from './controllers/SensorController';
 import * as ApiaryController from './controllers/ApiaryController';
 
 import * as dotenv from 'dotenv';
+import handleValidationErrors from "./utils/handleValidationErrors";
 
 dotenv.config();
 
@@ -26,13 +27,13 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/auth/register', registerValidation, UserController.register);
-app.post('/auth/login', UserController.login);
+app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
+app.post('/auth/login',loginValidation, handleValidationErrors,UserController.login);
 app.get('/auth/me', checkAuth, UserController.getMe);
 
 app.post('/sensor', SensorController.getSensorValues);
 
-app.post('/apiary', checkAuth, apiaryCreateValidation, ApiaryController.create);
+app.post('/apiary', checkAuth, apiaryCreateValidation, handleValidationErrors, ApiaryController.create);
 app.get('/apiary', ApiaryController.getAll);
 app.get('/apiary/:id', ApiaryController.getOne);
 app.delete('/apiary/:id', checkAuth, ApiaryController.remove);
