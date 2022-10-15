@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import {IApiary} from "../config/interface";
 
 const ApiarySchema = new mongoose.Schema(
   {
@@ -24,4 +25,4 @@ const ApiarySchema = new mongoose.Schema(
   },
 );
 
-export default mongoose.model('Apiary', ApiarySchema);
+export default mongoose.model<IApiary>('Apiary', ApiarySchema);

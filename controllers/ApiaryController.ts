@@ -1,6 +1,8 @@
-import ApiaryModel from '../models/Apiary.js';
+import ApiaryModel from '../models/Apiary';
+import {Request, Response} from "express";
+import {IApiary, IReqCreateApiary, IReqUpdateApiary} from "../config/interface";
 
-export const create = async (req, res) => {
+export const create = async (req: IReqCreateApiary, res: Response) => {
   try {
     const { name, description, startSeason } = req.body;
 
@@ -22,7 +24,7 @@ export const create = async (req, res) => {
   }
 };
 
-export const getAll = async (req, res) => {
+export const getAll = async (req:Request, res: Response) => {
   try {
     const apiaries = await ApiaryModel.find().populate('user').exec();
     res.json(apiaries);
@@ -34,7 +36,7 @@ export const getAll = async (req, res) => {
   }
 };
 
-export const getOne = async (req, res) => {
+export const getOne = async (req:Request, res: Response) => {
   try {
     const apiaryId = req.params.id;
 
@@ -42,7 +44,7 @@ export const getOne = async (req, res) => {
       {
         _id: apiaryId,
       },
-      (err, doc) => {
+      (err:any, doc:IApiary) => {
         if (err) {
           console.log(err);
           return res.status(500).json({
@@ -62,12 +64,12 @@ export const getOne = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Не удалось получить статьи',
+      message: 'Не вдалося отриманти пасіку',
     });
   }
 };
 
-export const remove = async (req, res) => {
+export const remove = async (req:Request, res: Response) => {
   try {
     const apiaryId = req.params.id;
 
@@ -75,7 +77,7 @@ export const remove = async (req, res) => {
       {
         _id: apiaryId,
       },
-      (err, doc) => {
+      (err:any, doc:IApiary) => {
         if (err) {
           console.log(err);
           return res.status(500).json({
@@ -102,7 +104,7 @@ export const remove = async (req, res) => {
   }
 };
 
-export const update = async (req, res) => {
+export const update = async (req:IReqUpdateApiary, res: Response) => {
   try {
     const { name, description, startSeason } = req.body;
     const apiaryId = req.params.id;
@@ -118,6 +120,7 @@ export const update = async (req, res) => {
         user: req.userId,
       },
     );
+
 
     res.json({
       success: true,

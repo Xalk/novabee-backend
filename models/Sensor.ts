@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import {ISensor} from "../config/interface";
 
 const SensorSchema = new mongoose.Schema({
   temperature: {
@@ -15,4 +16,4 @@ const SensorSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('Sensor', SensorSchema);
+export default mongoose.model<ISensor>('Sensor', SensorSchema);

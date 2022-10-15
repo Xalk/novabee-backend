@@ -2,21 +2,23 @@ import express from 'express';
 
 import mongoose from 'mongoose';
 
-import { registerValidation } from './validations/auth.js';
-import { apiaryCreateValidation } from './validations/apiary.js';
+import { registerValidation } from './validations/auth';
+import { apiaryCreateValidation } from './validations/apiary';
 
-import checkAuth from './utils/checkAuth.js';
+import checkAuth from './utils/checkAuth';
 
-import * as UserController from './controllers/UserController.js';
-import * as SensorController from './controllers/SensorController.js';
-import * as ApiaryController from './controllers/ApiaryController.js';
+import * as UserController from './controllers/UserController';
+import * as SensorController from './controllers/SensorController';
+import * as ApiaryController from './controllers/ApiaryController';
 
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
+const URI = process.env.MONGODB_URI;
+
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(`${URI}`)
   .then(() => console.log('DB ok'))
   .catch((err) => console.log('DB ok', err));
 
@@ -36,10 +38,8 @@ app.get('/apiary/:id', ApiaryController.getOne);
 app.delete('/apiary/:id', checkAuth, ApiaryController.remove);
 app.patch('/apiary/:id', checkAuth, apiaryCreateValidation, ApiaryController.update);
 
-app.listen(4444, (err) => {
-  if (err) {
-    return console.log(err);
-  }
-
-  console.log('Application listening on port 4444');
-});
+// server listenning
+const PORT = process.env.PORT || 4444
+app.listen(PORT, () => {
+  console.log('Server is running on port', PORT)
+})

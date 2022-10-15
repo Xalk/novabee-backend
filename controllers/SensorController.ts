@@ -1,6 +1,7 @@
-import SensorModel from '../models/Sensor.js';
+import SensorModel from '../models/Sensor';
+import {Request, Response} from "express";
 
-export const getSensorValues = async (req, res) => {
+export const getSensorValues = async (req: Request, res: Response) => {
   try {
     const { humidity, temperature, api_key } = req.body;
 
@@ -13,7 +14,6 @@ export const getSensorValues = async (req, res) => {
 
       const sensor = await doc.save();
 
-      // console.log(sensor);
 
       return res.json(sensor);
     } else {
