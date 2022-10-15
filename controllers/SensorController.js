@@ -13,6 +13,8 @@ export const getSensorValues = async (req, res) => {
 
       const sensor = await doc.save();
 
+      // console.log(sensor);
+
       return res.json(sensor);
     } else {
       return res.status(403).json({
