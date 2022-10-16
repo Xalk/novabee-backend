@@ -38,7 +38,7 @@ export const getAll = async (req:Request, res: Response) => {
 
 export const getOne = async (req:Request, res: Response) => {
   try {
-    const apiaryId = req.params.id;
+    const apiaryId = req.params.apiaryId;
 
     ApiaryModel.findOne(
       {
@@ -60,7 +60,7 @@ export const getOne = async (req:Request, res: Response) => {
 
         res.json(doc);
       },
-    ).populate('user');
+    ).populate('beehives user');
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -71,7 +71,7 @@ export const getOne = async (req:Request, res: Response) => {
 
 export const remove = async (req:Request, res: Response) => {
   try {
-    const apiaryId = req.params.id;
+    const apiaryId = req.params.apiaryId;
 
     ApiaryModel.findOneAndDelete(
       {
@@ -107,7 +107,7 @@ export const remove = async (req:Request, res: Response) => {
 export const update = async (req:IReqUpdateApiary, res: Response) => {
   try {
     const { name, description, startSeason } = req.body;
-    const apiaryId = req.params.id;
+    const apiaryId = req.params.apiaryId;
 
     await ApiaryModel.updateOne(
       {

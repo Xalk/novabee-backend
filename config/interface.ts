@@ -5,6 +5,7 @@ export interface IUser extends Document{
     fullName: string
     email: string
     passwordHash: string
+    role: "user" | "admin"
     _doc: object
 }
 
@@ -45,5 +46,22 @@ export interface IReqCreateApiary extends Request {
     userId?: string
 }
 export interface IReqUpdateApiary extends Request {
+    userId?: string
+}
+
+export interface IBeehive extends Document{
+    name:string
+    description:string
+    deviceID:Date
+    apiary: string
+    _doc: object
+}
+
+export interface IReqCreateBeehive extends Request {
+    apiaryId?: string
+}
+
+
+export interface IReqUpdateBeehive extends Request {
     userId?: string
 }
