@@ -1,11 +1,11 @@
 import {Response, Request} from "express";
 import BeehiveModel from "../models/Beehive"
-import { IBeehive, IReqCreateBeehive, IReqUpdateBeehive} from "../config/interface";
+import {IBeehive, IReqBeehive} from "../config/interface";
 import ApiaryModel from "../models/Apiary";
 
-export const create = async (req: IReqCreateBeehive, res:Response)=>{
-    try{
-        const { name, description, deviceID } = req.body;
+export const create = async (req: IReqBeehive, res: Response) => {
+    try {
+        const {name, description, deviceID} = req.body;
 
 
         const doc = new BeehiveModel({
@@ -16,14 +16,14 @@ export const create = async (req: IReqCreateBeehive, res:Response)=>{
         })
 
         await ApiaryModel.findOneAndUpdate({_id: req.params.apiaryId}, {
-            $push: { beehives: doc._id }
+            $push: {beehives: doc._id}
         })
 
 
         const beehive = await doc.save();
 
         res.json(beehive);
-    }catch (err) {
+    } catch (err) {
         console.log(err);
         res.status(500).json({
             message: 'Не вдалося створити вулик',
@@ -31,7 +31,7 @@ export const create = async (req: IReqCreateBeehive, res:Response)=>{
     }
 }
 
-export const getAll = async (req:Request, res: Response) => {
+export const getAll = async (req: Request, res: Response) => {
     try {
         const beehives = await BeehiveModel.find({apiary: req.params.apiaryId});
 
@@ -44,32 +44,37 @@ export const getAll = async (req:Request, res: Response) => {
     }
 };
 
-export const getOne = async (req:Request, res: Response) => {
+export const getOne = async (req: IReqBeehive, res: Response) => {
     try {
         const {apiaryId, beehiveId} = req.params;
 
-        BeehiveModel.findOne(
-            {
-                _id: beehiveId,
-                apiary: apiaryId
-            },
-            (err:any, doc:IBeehive) => {
-                if (err) {
-                    console.log(err);
-                    return res.status(500).json({
-                        message: 'Не вдалося отриманти вулик',
-                    });
-                }
 
-                if (!doc) {
-                    return res.status(404).json({
-                        message: 'Вулик не знайдений',
-                    });
-                }
+        if (req.userId)
 
-                res.json(doc);
-            },
-        );
+            BeehiveModel.findOne(
+                {
+                    _id: beehiveId,
+                    apiary: apiaryId
+                },
+                async (err: any, doc: IBeehive) => {
+                    if (err) {
+                        console.log(err);
+                        return res.status(500).json({
+                            message: 'Не вдалося отриманти вулик',
+                        });
+                    }
+
+                    if (!doc) {
+                        return res.status(404).json({
+                            message: 'Вулик не знайдений',
+                        });
+                    }
+
+
+                    res.json(doc);
+
+                },
+            );
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -78,7 +83,7 @@ export const getOne = async (req:Request, res: Response) => {
     }
 };
 
-export const remove = async (req:Request, res: Response) => {
+export const remove = async (req: Request, res: Response) => {
     try {
         const {apiaryId, beehiveId} = req.params;
 
@@ -87,7 +92,7 @@ export const remove = async (req:Request, res: Response) => {
                 _id: beehiveId,
                 apiary: apiaryId
             },
-            async (err:any, doc:IBeehive) => {
+            async (err: any, doc: IBeehive) => {
                 if (err) {
                     console.log(err);
                     return res.status(500).json({
@@ -116,10 +121,6 @@ export const remove = async (req:Request, res: Response) => {
         );
 
 
-
-
-
-
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -128,9 +129,11 @@ export const remove = async (req:Request, res: Response) => {
     }
 };
 
-export const update = async (req:IReqUpdateBeehive, res: Response) => {
+export const update = async (req: IReqBeehive, res: Response) => {
     try {
-        const { name, description, deviceID } = req.body;
+
+
+        const {name, description, deviceID} = req.body;
         const apiaryId = req.params.apiaryId;
         const beehiveId = req.params.beehiveId;
 

@@ -55,11 +55,7 @@ export interface IBeehive extends Document{
     _doc: object
 }
 
-export interface IReqCreateBeehive extends Request {
-    apiaryId?: string
-}
-
-
-export interface IReqUpdateBeehive extends Request {
+export interface IReqBeehive extends Request {
     userId?: string
 }
+
