@@ -13,9 +13,9 @@ router.use('/apiary/:apiaryId', BeehiveRouter);
 
 router.post('/apiary', checkAuth, apiaryCreateValidation, handleValidationErrors, ApiaryController.create);
 
-router.get('/apiary', ApiaryController.getAll);
+router.get('/apiary', checkAuth, ApiaryController.getAll);
 
-router.get('/apiary/:apiaryId', ApiaryController.getOne);
+router.get('/apiary/:apiaryId', checkAuth, ApiaryController.getOne);
 
 router.delete('/apiary/:apiaryId', checkAuth, ApiaryController.remove);
 

@@ -42,12 +42,10 @@ export interface IApiary extends Document{
     _doc: object
 }
 
-export interface IReqCreateApiary extends Request {
+export interface IReqApiary extends Request {
     userId?: string
 }
-export interface IReqUpdateApiary extends Request {
-    userId?: string
-}
+
 
 export interface IBeehive extends Document{
     name:string

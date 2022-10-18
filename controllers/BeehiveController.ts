@@ -87,7 +87,7 @@ export const remove = async (req:Request, res: Response) => {
                 _id: beehiveId,
                 apiary: apiaryId
             },
-            (err:any, doc:IBeehive) => {
+            async (err:any, doc:IBeehive) => {
                 if (err) {
                     console.log(err);
                     return res.status(500).json({
@@ -101,11 +101,25 @@ export const remove = async (req:Request, res: Response) => {
                     });
                 }
 
+
+                await ApiaryModel.findOneAndUpdate({_id: req.params.apiaryId}, {
+                    $pullAll: {
+                        beehives: [{_id: req.params.beehiveId}],
+                    },
+                })
+
+
                 res.json({
                     success: true,
                 });
             },
         );
+
+
+
+
+
+
     } catch (err) {
         console.log(err);
         res.status(500).json({
