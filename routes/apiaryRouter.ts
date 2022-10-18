@@ -7,7 +7,6 @@ import BeehiveRouter from "./beehiveRouter";
 
 const router = express.Router()
 
-
 router.use('/apiary/:apiaryId', BeehiveRouter);
 
 

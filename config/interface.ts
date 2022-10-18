@@ -1,7 +1,7 @@
-import { Document } from 'mongoose'
-import { Request } from 'express'
+import {Document} from 'mongoose'
+import {Request} from 'express'
 
-export interface IUser extends Document{
+export interface IUser extends Document {
     fullName: string
     email: string
     passwordHash: string
@@ -27,17 +27,17 @@ export interface IDecodedToken {
     exp: number
 }
 
-export interface ISensor extends Document{
+export interface ISensor extends Document {
     temperature: string
     humidity: string
     createdAt: Date
     _doc: object
 }
 
-export interface IApiary extends Document{
-    name:string
-    description:string
-    startSeason:Date
+export interface IApiary extends Document {
+    name: string
+    description: string
+    startSeason: Date
     user: string
     _doc: object
 }
@@ -47,10 +47,10 @@ export interface IReqApiary extends Request {
 }
 
 
-export interface IBeehive extends Document{
-    name:string
-    description:string
-    deviceID:Date
+export interface IBeehive extends Document {
+    name: string
+    description: string
+    deviceID: string
     apiary: string
     _doc: object
 }
@@ -59,3 +59,12 @@ export interface IReqBeehive extends Request {
     userId?: string
 }
 
+export interface IQueen extends Document {
+    name: string
+    description: string
+    introducedFrom: Date
+    reQueenedFrom: Date
+    isOut: Boolean
+    beehive: string
+    _doc: object
+}

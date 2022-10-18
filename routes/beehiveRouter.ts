@@ -4,8 +4,11 @@ import checkAuth from "../utils/checkAuth";
 import {canGetBeehive} from "../utils/canGetBeehive";
 import {beehiveCreateValidation} from "../validations/beehive";
 import handleValidationErrors from "../utils/handleValidationErrors";
+import QueenRouter from "./queenRouter";
 
 const router = express.Router({mergeParams: true})
+
+router.use('/beehive/:beehiveId', QueenRouter)
 
 
 router.post('/beehive', checkAuth, canGetBeehive, beehiveCreateValidation, handleValidationErrors, BeehiveController.create)

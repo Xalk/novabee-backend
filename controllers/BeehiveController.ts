@@ -49,32 +49,32 @@ export const getOne = async (req: IReqBeehive, res: Response) => {
         const {apiaryId, beehiveId} = req.params;
 
 
-        if (req.userId)
+        // if (req.userId)
 
-            BeehiveModel.findOne(
-                {
-                    _id: beehiveId,
-                    apiary: apiaryId
-                },
-                async (err: any, doc: IBeehive) => {
-                    if (err) {
-                        console.log(err);
-                        return res.status(500).json({
-                            message: 'Не вдалося отриманти вулик',
-                        });
-                    }
+        BeehiveModel.findOne(
+            {
+                _id: beehiveId,
+                apiary: apiaryId
+            },
+            async (err: any, doc: IBeehive) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).json({
+                        message: 'Не вдалося отриманти вулик',
+                    });
+                }
 
-                    if (!doc) {
-                        return res.status(404).json({
-                            message: 'Вулик не знайдений',
-                        });
-                    }
+                if (!doc) {
+                    return res.status(404).json({
+                        message: 'Вулик не знайдений',
+                    });
+                }
 
 
-                    res.json(doc);
+                res.json(doc);
 
-                },
-            );
+            },
+        );
     } catch (err) {
         console.log(err);
         res.status(500).json({
