@@ -19,7 +19,7 @@ router.get('/apiary/:apiaryId', checkAuth, ApiaryController.getOne);
 
 router.delete('/apiary/:apiaryId', checkAuth, ApiaryController.remove);
 
-router.patch('/apiary/:apiaryId', checkAuth, apiaryCreateValidation, ApiaryController.update);
+router.patch('/apiary/:apiaryId', checkAuth, apiaryCreateValidation, handleValidationErrors, ApiaryController.update);
 
 
 export default router;
