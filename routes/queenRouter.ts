@@ -10,11 +10,11 @@ const router = express.Router({mergeParams: true})
 
 router.post('/queen', checkAuth, canGetBeehive, queenCreateValidation, handleValidationErrors, QueenController.create)
 
-router.get('/queen', checkAuth, canGetBeehive, queenCreateValidation, handleValidationErrors, QueenController.getOne)
+router.get('/queen', checkAuth, canGetBeehive,  QueenController.getOne)
 
 router.patch('/queen', checkAuth, canGetBeehive, queenCreateValidation, handleValidationErrors, QueenController.update)
 
-router.delete('/queen', checkAuth, canGetBeehive, queenCreateValidation, handleValidationErrors, QueenController.remove)
+router.delete('/queen', checkAuth, canGetBeehive, QueenController.remove)
 
 
 export default router;

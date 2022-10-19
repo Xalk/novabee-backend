@@ -77,7 +77,6 @@ export interface IProduct extends Document {
     description: string
     price:number,
     imageUrl: string
-    userId: string
     _doc: object
 }
 
