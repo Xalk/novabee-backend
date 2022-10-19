@@ -6,6 +6,7 @@ export interface IUser extends Document {
     email: string
     passwordHash: string
     role: "user" | "admin"
+    cart: []
     _doc: object
 }
 
@@ -39,6 +40,7 @@ export interface IApiary extends Document {
     description: string
     startSeason: Date
     user: string
+    beehives: IBeehive[]
     _doc: object
 }
 
@@ -66,5 +68,21 @@ export interface IQueen extends Document {
     reQueenedFrom: Date
     isOut: Boolean
     beehive: string
+    _doc: object
+}
+
+
+export interface IProduct extends Document {
+    title: string
+    description: string
+    price:number,
+    imageUrl: string
+    userId: string
+    _doc: object
+}
+
+export interface IOrder extends Document {
+    products: IProduct[]
+    user: IUser
     _doc: object
 }
