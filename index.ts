@@ -15,6 +15,7 @@ app.use('/api', routes.authRouter)
 app.use('/api', routes.sensorRouter)
 app.use('/api', routes.apiaryRouter)
 app.use('/api', routes.productRouter)
+app.use('/api', routes.cartRouter)
 
 
 // Database

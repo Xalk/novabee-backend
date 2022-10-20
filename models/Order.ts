@@ -12,7 +12,9 @@ const OrderSchema = new mongoose.Schema({
             type: mongoose.Types.ObjectId,
             required: true,
             ref: 'User',
-        }
+        },
+        address: {type: Object, required: true},
+        status: {type: String, default: "pending"},
     },
     {
         timestamps: true,

@@ -6,13 +6,20 @@ export interface IUser extends Document {
     email: string
     passwordHash: string
     role: "user" | "admin"
-    cart: []
+    cart: {
+        items:[]
+    }
     _doc: object
 }
 
 export interface IReqGetMe extends Request {
     userId?: string
 }
+export interface IReqCart extends Request {
+    userId?: string
+    productId?: string
+}
+
 
 
 export interface INewUser {
@@ -83,5 +90,7 @@ export interface IProduct extends Document {
 export interface IOrder extends Document {
     products: IProduct[]
     user: IUser
+    address: Object
+    status: String
     _doc: object
 }
