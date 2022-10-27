@@ -7,7 +7,7 @@ export default (req: IReqGetMe, res: Response, next: NextFunction) => {
 
   if (token) {
     try {
-      const decoded = <IDecodedToken>jwt.verify(token, 'lucky666');
+      const decoded = <IDecodedToken>jwt.verify(token, `${process.env.SECRET_TOKEN_KEY}`);
 
       req.userId = decoded._id;
 

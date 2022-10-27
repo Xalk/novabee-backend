@@ -3,10 +3,11 @@ import {Request, Response} from "express";
 
 export const getSensorValues = async (req: Request, res: Response) => {
   try {
-    const { humidity, temperature, api_key } = req.body;
+    const { humidity, temperature, apiKey, deviceID } = req.body;
 
-    if (api_key === process.env.SENSOR_API) {
+    if (apiKey === process.env.SENSOR_API) {
       const doc = new SensorModel({
+        deviceID,
         temperature,
         humidity,
         createdAt: new Date(),

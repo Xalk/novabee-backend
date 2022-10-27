@@ -39,6 +39,7 @@ export interface ISensor extends Document {
     temperature: string
     humidity: string
     createdAt: Date
+    deviceID: string
     _doc: object
 }
 
