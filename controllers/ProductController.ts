@@ -1,19 +1,11 @@
-import {IProduct, IReqApiary} from "../config/interface";
-import {Request, Response} from "express";
-import ProductModel from "../models/Product";
+import {IProduct, IReqApiary} from '../config/interface';
+import {Request, Response} from 'express';
+import ProductModel from '../models/Product';
 
 
 export const create = async (req: Request, res: Response) => {
     try {
-
-
-        // if(user.role === ROLE.ADMIN ) return 500
-        const {
-            title,
-            price,
-            description,
-            imageUrl,
-        } = req.body;
+        const {title, price, description, imageUrl} = req.body;
 
         const doc = new ProductModel({
             title,
@@ -35,20 +27,28 @@ export const create = async (req: Request, res: Response) => {
 
 export const getAll = async (req: IReqApiary, res: Response) => {
     try {
-        const products = await ProductModel.find();
-        res.json(products);
+
+        let {sort, filter} = req.query;
+
+        sort = sort == undefined ? {} : [JSON.parse(req.query.sort as string) || {}];
+        filter = filter == undefined ? {} : JSON.parse(req.query.filter as string) || {};
+        // console.log(sort);
+        // console.log(filter);
+
+        const products = await ProductModel.find(filter as object).sort(sort as []);
+
+        res.json({data: products});
     } catch (err) {
         console.log(err);
         res.status(500).json({
             message: 'Не вдалося отриманти товари',
         });
     }
-}
+};
 
 export const getOne = async (req: Request, res: Response) => {
     try {
         const productId = req.params.productId;
-
 
         ProductModel.findOne(
             {
@@ -71,22 +71,20 @@ export const getOne = async (req: Request, res: Response) => {
                 res.json(doc);
             },
         );
-
-
     } catch (err) {
         console.log(err);
         res.status(500).json({
             message: 'Не вдалося отриманти товар',
         });
     }
-}
+};
 
 export const update = async (req: Request, res: Response) => {
     try {
-        const {title, price, description, imageUrl,} = req.body;
+        const {title, price, description, imageUrl} = req.body;
         const productId = req.params.productId;
 
-        await ProductModel.updateOne(
+        const product = await ProductModel.findOneAndUpdate(
             {
                 _id: productId,
             },
@@ -98,23 +96,20 @@ export const update = async (req: Request, res: Response) => {
             },
         );
 
-
         res.json({
-            success: true,
+            data: product,
         });
-
     } catch (err) {
         console.log(err);
         res.status(500).json({
             message: 'Не вдалось оновити товар',
         });
     }
-}
+};
 
 export const remove = async (req: Request, res: Response) => {
     try {
         const productId = req.params.productId;
-
 
         ProductModel.findOneAndDelete(
             {
@@ -134,11 +129,15 @@ export const remove = async (req: Request, res: Response) => {
                     });
                 }
 
+
                 res.json({
-                    success: true,
+                    data: doc
                 });
             },
         );
+
+
+
     } catch (err) {
         console.log(err);
         res.status(500).json({
