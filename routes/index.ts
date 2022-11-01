@@ -5,6 +5,8 @@ import beehiveRouter from './beehiveRouter';
 import queenRouter from './queenRouter';
 import productRouter from './productRouter';
 import cartRouter from './cartRouter';
+import uploadRouter from './uploadRouter';
+
 
 const routes = {
   authRouter,
@@ -14,6 +16,7 @@ const routes = {
   queenRouter,
   productRouter,
   cartRouter,
+  uploadRouter,
 };
 
 export default routes;
