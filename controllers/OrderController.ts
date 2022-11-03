@@ -65,8 +65,11 @@ export const getAll = async (req: IReqCart, res: Response) => {
             .skip(skip)
             .limit(limit);
 
-        res.header('Content-Range', `product 0-${limit}/${countOrder}`);
-        res.header('Access-Control-Expose-Headers', 'Content-Range');
+
+        res.set({
+            'Access-Control-Expose-Headers': 'Content-Range',
+            'Content-Range': `X-Total-Count: ${1} - ${countOrder} / ${countOrder}`
+        });
 
         res.json({data: orders});
     } catch (err) {
