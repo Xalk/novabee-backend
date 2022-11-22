@@ -80,7 +80,7 @@ export const update = async (req: Request, res: Response) => {
     const { title, price, description, imageUrl } = req.body;
     const productId = req.params.productId;
 
-    const product = await ProductModel.findOneAndUpdate(
+    const product = await ProductModel.updateOne(
       {
         _id: productId,
       },

@@ -2,7 +2,7 @@ import express from 'express';
 import * as ProductController from '../controllers/ProductController';
 import checkAuth from '../utils/checkAuth';
 import { checkAdmin } from '../utils/checkAdmin';
-import range from "../utils/range";
+import range from '../utils/range';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get('/product', range, ProductController.getAll);
 
 router.get('/product/:productId', ProductController.getOne);
 
-router.patch('/product/:productId',  checkAuth, checkAdmin, ProductController.update);
+router.patch('/product/:productId', checkAuth, checkAdmin, ProductController.update);
 
 router.delete('/product/:productId', checkAuth, checkAdmin, ProductController.remove);
 
