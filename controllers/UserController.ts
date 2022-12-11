@@ -74,7 +74,7 @@ export const login = async (req: Request, res: Response) => {
 
         const {passwordHash, ...userData} = user._doc as IUser;
 
-        res.json({...userData, token});
+        res.json({userData, token});
     } catch (error) {
         console.log(error);
         res.status(500).json({
