@@ -9,7 +9,7 @@
     "postinstall": "tsc",
     "watch-node": "nodemon dist/index.js",
     "watch-ts": "tsc -w",
-    "deploy": "git add . && git commit -m Heroku && git push heroku master"
+    "build": "tsc"
   },
   "engines": { "node": "14.17.3" },
   "author": "",
